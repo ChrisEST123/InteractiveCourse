@@ -10,19 +10,10 @@ window.addEventListener('DOMContentLoaded', function() {
     checkDarkMode();
 
     themeButton.addEventListener('click', () => {
-        const darkModeStatus = getFromLocalStorage('darkMode');
-
-        console.log(darkModeStatus);
+        const darkModeStatus = getFromLocalStorage('darkMode') === 'true';
     
-        switchDarkModeButton(darkModeStatus);
-    
-        if (!darkModeStatus) {
-            saveIntoLocalStorage('darkMode', true);
-    
-            return;
-        }
-    
-        saveIntoLocalStorage('darkMode', false);
+        saveIntoLocalStorage('darkMode', !darkModeStatus);
+        switchDarkModeButton(!darkModeStatus);    
     })
 });
 
@@ -31,27 +22,24 @@ function getFromLocalStorage(key) {
 }
 
 function saveIntoLocalStorage(key, value) {
-    console.log(key);
-    console.log(value);
     return localStorage.setItem(key, value);
 }
 
 function checkDarkMode() {
-    const darkModeStatus = getFromLocalStorage('darkMode');
-
+    const darkModeStatus = getFromLocalStorage('darkMode') === 'true';
     switchDarkModeButton(darkModeStatus);
-
-    return darkModeStatus;
 }
 
 function switchDarkModeButton(darkModeStatus) {
     if (!darkModeStatus) {
+        document.body.classList.remove('dark-mode');
         darkMode.style['display'] = 'none';
         lightMode.style['display'] = 'inline';
 
         return;
     }
 
+    document.body.classList.add('dark-mode');
     lightMode.style['display'] = 'none';
     darkMode.style['display'] = 'inline';
 }
