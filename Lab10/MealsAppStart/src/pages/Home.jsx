@@ -12,6 +12,7 @@ const Home = () => {
   const [randomMeals, setRandomMeals] = useState([]);
   const [favoriteMeals, setFavoriteMeals] = useState([]);
   const [favoriteMealIds, setFavoriteMealIds] = useState([]);
+  const [searchResults, setSearchResults] = useState([]);
 
   useEffect(() => {
     loadRandomMeals();
@@ -34,10 +35,13 @@ const Home = () => {
   const searchForMeal = async (searchKey) => {
     const res = await fetch(SEARCH_API + searchKey);
     const data = await res.json();
-    let meal = data.meals[0];
+    return data.meals || [];
+  };
 
-    return meal;
-  }
+  const handleSearch = async (query) => {
+    const results = await searchForMeal(query);
+    setSearchResults(results);
+  };
 
   const loadRandomMeals = async (count = 5) => {
     const fetches = Array(count).fill().map(() =>
@@ -70,7 +74,10 @@ const Home = () => {
 
   return (
     <div className="store">
-      <Search/>
+      <Search onSearch={handleSearch} />
+      {searchResults.length > 0 && (
+        <button onClick={() => setSearchResults([])}>Clear Search</button>
+      )}
       
       <Favorites
         favoriteMeals={favoriteMeals}
@@ -78,7 +85,7 @@ const Home = () => {
       />
 
       <div className="meals" id="meals">
-        {randomMeals.map((meal) => (
+        {(searchResults.length > 0 ? searchResults : randomMeals).map((meal) => (
           <MealCard
             key={meal.idMeal}
             mealData={meal}
