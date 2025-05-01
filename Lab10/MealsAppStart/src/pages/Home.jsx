@@ -56,7 +56,6 @@ const Home = () => {
   };
 
   const toggleFavorite = async (id) => {
-    console.log(id);
     if (favoriteMealIds.includes(id)) {
       // Remove from favorites
       const updatedFavorites = favoriteMeals.filter(meal => meal.idMeal !== id);
