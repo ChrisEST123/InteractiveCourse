@@ -1,5 +1,4 @@
-
-const Favorites = ({favoriteMeals = []}) => {
+const Favorites = ({ favoriteMeals = [], toggleFavorite }) => {
   return (
     <div className="favorites-section">
       <h3>Favorites</h3>
@@ -8,12 +7,17 @@ const Favorites = ({favoriteMeals = []}) => {
           <li key={meal.idMeal}>
             <img id="fav-img" src={meal.strMealThumb} alt={meal.strMeal} />
             <span>{meal.strMeal}</span>
-            <button className="clear"><i className="fas fa-window-close"></i></button>
+            <button
+              className="clear"
+              onClick={() => toggleFavorite(meal.idMeal)}
+            >
+              <i className="fas fa-window-close"></i>
+            </button>
           </li>
         ))}
       </ul>
     </div>
-  )
-}
+  );
+};
 
-export default Favorites
+export default Favorites;
