@@ -4,6 +4,7 @@ import './App.css';
 import Layout from './components/Layout';
 import Home from './pages/Home';
 import Meal from './pages/Meal';
+import Login from './pages/Login';
 import Admin from './pages/Admin';
 import NotFound from './pages/NotFound';
 import ProtectedRoute from './auth/auth';
@@ -16,6 +17,7 @@ function App() {
           <Route index element={<Home />} />
           <Route path="meal/:id" element={<Meal />} />
           <Route path="*" element={<NotFound />} />
+          <Route path="login" element={<Login />} />
           <Route path="admin" element={
             <ProtectedRoute>
               <Admin />
